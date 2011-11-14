@@ -300,7 +300,8 @@ class PayPalStandardBase(Model):
 
     def initialize(self, request):
         """Store the data we'll need to make the postback from the request object."""
-        self.query = getattr(request, request.method).urlencode()
+        #paypal instructs that we postback the exact string posted to us
+        self.query = request.META.get('QUERY_STRING', '')
         self.ipaddress = request.META.get('REMOTE_ADDR', '')
 
     def _postback(self):
