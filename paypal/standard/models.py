@@ -301,7 +301,7 @@ class PayPalStandardBase(Model):
     def initialize(self, request):
         """Store the data we'll need to make the postback from the request object."""
         #paypal instructs that we postback the exact string posted to us
-        if self.META.get('CONTENT_TYPE', '').startswith('multipart'):
+        if request.META.get('CONTENT_TYPE', '').startswith('multipart'):
             self.query = request.POST.urlencode()
         else:
             self.query = request.raw_post_data
